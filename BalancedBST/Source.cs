@@ -7,7 +7,7 @@ namespace AlgorithmsDataStructures2
     {
         public static int[] GenerateBBSTArray(int[] a)
         {
-            int[] tree = new int[a.Length];
+            var tree = new int[a.Length];
 
             Array.Sort(a);
 
@@ -21,9 +21,12 @@ namespace AlgorithmsDataStructures2
             tree[index] = a[middle];
 
             if (a.Length == 1) return tree;
-            
-            tree = GenerateBBSTArrayHelper(a[..middle], tree, index * 2 + 1);
-            tree = GenerateBBSTArrayHelper(a[(middle+1)..], tree, index * 2 + 2);
+
+            var temp = new int[middle];
+            Array.Copy(a, 0, temp, 0, middle);
+            tree = GenerateBBSTArrayHelper(temp, tree, index * 2 + 1);
+            Array.Copy(a, middle + 1, temp, 0, middle);
+            tree = GenerateBBSTArrayHelper(temp, tree, index * 2 + 2);
 
             return tree;
         }
